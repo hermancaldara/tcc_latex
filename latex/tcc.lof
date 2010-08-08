@@ -1,0 +1,25 @@
+\select@language {brazil}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Fluxograma do ciclo do TDD}}{16}{figure.listoffigures.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Manifesto \IeC {\'A}gil. Fonte: \cite {SHORE}}}{18}{figure.listoffigures.2.2}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Componentes do modelo de Integra\IeC {\c c}\IeC {\~a}o Cont\IeC {\'\i }nua S\IeC {\'\i }ncrona. Adaptado de \cite {DUVALL}}}{21}{figure.listoffigures.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Componentes de um sistema de Integra\IeC {\c c}\IeC {\~a}o Cont\IeC {\'\i }nua ass\IeC {\'\i }ncrona. Adaptado de \cite {DUVALL}}}{22}{figure.listoffigures.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Buildbot exibindo dados da integra\IeC {\c c}\IeC {\~a}o de um sistema}}{24}{figure.listoffigures.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces L\IeC {\^a}mpadas de Lava mostrando a situa\IeC {\c c}\IeC {\~a}o do \textit {build}. Fonte: \cite {LAVA-LAMPS}}}{25}{figure.listoffigures.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Bot\IeC {\~a}o da integra\IeC {\c c}\IeC {\~a}o e suas etapas. Adaptado de \cite {DUVALL}}}{26}{figure.listoffigures.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Esquema das etapas para se executar um \textit {build} privado. Adaptado de \cite {DUVALL}}}{29}{figure.listoffigures.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Rela\IeC {\c c}\IeC {\~a}o entre mecanismos e tipos de \textit {build}. Fonte: \cite {DUVALL}}}{30}{figure.listoffigures.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Status dos \textit {builds} no Hudson.}}{35}{figure.listoffigures.3.8}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Componentes do ambiente de Integra\IeC {\c c}\IeC {\~a}o Cont\IeC {\'\i }nua do estudo de caso.}}{41}{figure.listoffigures.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Comandos para adicionar chave do reposit\IeC {\'o}rio Hudson}}{42}{figure.listoffigures.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Comandos para instalar o Hudson}}{42}{figure.listoffigures.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Tela principal do Hudson}}{42}{figure.listoffigures.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Tela de configura\IeC {\c c}\IeC {\~a}o da Notifica\IeC {\c c}\IeC {\~a}o de E-mail no Hudson}}{43}{figure.listoffigures.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Tela de instala\IeC {\c c}\IeC {\~a}o do ``Selenium Plugin'' no Hudson}}{43}{figure.listoffigures.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Tela de cria\IeC {\c c}\IeC {\~a}o de n\IeC {\'o}s no Hudson}}{44}{figure.listoffigures.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Tela de configura\IeC {\c c}\IeC {\~a}o de n\IeC {\'o}s no Hudson}}{44}{figure.listoffigures.4.8}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Tela de cria\IeC {\c c}\IeC {\~a}o de tarefas no Hudson}}{45}{figure.listoffigures.4.9}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Tela de uma tarefa sendo ligada ao Selenium}}{45}{figure.listoffigures.4.10}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Tela de configura\IeC {\c c}\IeC {\~a}o do Subversion em uma tarefa}}{46}{figure.listoffigures.4.11}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Tela de configura\IeC {\c c}\IeC {\~a}o de fiscaliza\IeC {\c c}\IeC {\~a}o de reposit\IeC {\'o}rio em um tarefa}}{46}{figure.listoffigures.4.12}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Tela com comandos de execu\IeC {\c c}\IeC {\~a}o de um \textit {build} em uma tarefa}}{47}{figure.listoffigures.4.13}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Tela com configura\IeC {\c c}\IeC {\~a}o de envio de e-mail em uma tarefa}}{47}{figure.listoffigures.4.14}

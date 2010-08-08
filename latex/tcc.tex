@@ -1,0 +1,57 @@
+\documentclass[12pt, a4paper, tocpage=plain]{abnt} % Fonte tamanho 12, papel A4, páginas do sumário sem o p.<número da página>
+
+\usepackage[utf8]{inputenc} % dá suporte para caracteres especiais como acentos e cedilha
+\usepackage[brazil]{babel} % Gera datas e nomes em português com estilo brasileiro
+\usepackage{hyperref} % permite a criação de hyperlink no documento, como os links usados na referência
+\usepackage[alf]{abntcite} % estilo de referência bibliográfica
+\usepackage{graphicx} % Permite a utilização de imagens no documento
+\usepackage[small]{caption} %Define as legendas das figuras com fontes menores do que o texto
+\usepackage{pslatex} % Define que o formatao da letra será Times New Roman
+\usepackage{epigraph} % Permite a criação de epígrafes 
+\usepackage{setspace} % Permite a definição de espaçamento entre linhas
+\usepackage[top=3cm, left=3cm, right=2cm, bottom=2cm]{geometry} % define as margens da folha
+
+\setcounter{secnumdepth}{3} % Subsubsections numeradas
+\setcounter{tocdepth}{3} % Subsubsections numeradas
+
+\setlength{\parindent}{1.25cm} % Definição do recuo da primeira linha dos parágrafos para 1.25 cm
+
+\renewcommand{\ABNTchapterfont}{\bfseries} %Define a fonte do \chapter
+\renewcommand{\ABNTchaptersize}{\large} % Define o tamanho da fonte do \chapter
+\renewcommand{\ABNTsectionfontsize}{\large} % Define o tamanho da fonte da \section
+\renewcommand{\ABNTsubsectionfontsize}{\large} % Define o tamanho da fonte do \subsection
+\renewcommand{\ABNTsubsubsectionfontsize}{\large} % Define o tamanho da fonte do \subsubsection
+\renewcommand{\ABNTbibliographyname}{REFERÊNCIAS BIBLIOGRÁFICAS} % muda o título gerado pelo \bibliographys
+\renewcommand{\ABNTanapsize}{\large} % Define o tamanho da fonte do \apendice
+\renewcommand{\ABNTaposindicativoanap}{\centering} % Centraliza o título do apêndice
+
+%\setlength{\parskip}{0pt}
+%\setlength{\parsep}{0pt}
+%\setlength{\headsep}{0pt}
+%\setlength{\topskip}{0pt}
+%\setlength{\topmargin}{0pt}
+%\setlength{\topsep}{0pt}
+%\setlength{\partopsep}{0pt}
+
+\begin{document}
+\include{capa} % cria a capa
+\include{rosto} % folha de rosto
+\include{aprovacao} % folha de aprovação
+\include{dedicatoria}  % onde se coloca a dedicatória
+\include{agradecimentos} % onde se coloca os agradecimentos
+\include{epigrafe} % onde se coloca um pensamento
+\include{resumo} % resumo do trabalho
+\include{abstract} % resumo em língua estrangeira
+\renewcommand{\listfigurename}{LISTA DE FIGURAS} % Modifica o nome da lista de figuras
+\listoffigures % gera o índice de figuras
+\renewcommand{\contentsname}{SUMÁRIO} % Modifica o nome do sumário
+\tableofcontents % gera o sumário
+\onehalfspacing % espaçamento de 1.5cm entre linhas
+\include{cap1}
+\include{cap2}
+\include{cap3}
+\include{cap4}
+\include{cap5}
+\bibliography{referencia}
+%\include{apendice_a}
+\end{document}

@@ -1,0 +1,341 @@
+\chapter{INTEGRAÇÃO CONTÍNUA}
+
+Neste capítulo é apresentado o referencial teórico sobre a Integração Contínua. São mostrados os tipos de integração, os componentes de um ambiente de Integração Contínua, o \textit{script} que é responsável por integrar o sistema, as práticas e vantagens da Integração Contínua.
+
+\section{O que é Integração Contínua?}
+Integração Contínua é um processo que consiste na integração do código fonte pelo menos uma vez ao dia, mantendo a consistência na base de código ao final de cada integração. \citeonline{FOWLER} definiu o processo da seguinte maneira:
+
+\begin{citacao}
+Integração Contínua é uma prática de desenvolvimento de software onde os membros de um time integram seu trabalho frequentemente, geralmente cada pessoa integra pelo menos diariamente – podendo haver múltiplas integrações por dia. Cada integração é verificada por um \textit{build} automatizado (incluindo testes) para detectar erros de integração o mais rápido possível. Muitos times acham que essa abordagem leva a uma significante redução nos problemas de integração e permite que um time desenvolva software coeso mais rapidamente.
+\end{citacao}
+
+Existem duas formas de executar a integração: a Integração Contínua Síncrona e a Assíncrona.
+
+\subsection{Integração Contínua Síncrona}
+
+Este método de integração, consiste quando o desenvolvedor integra, por vez seu trabalho, compelindo aos outros desenvolvedores esperarem pelo término da integração corrente, para que possam integrar seus respectivos trabalhos \cite{IMPROVEIT-INTEGRACAO}. Por este motivo, nem todos os projetos podem utilizar este método, pois ele exige que os desenvolvedores trabalhem juntos, normalmente em uma mesma sala, garantindo assim, que só um desenvolvedor integre seu trabalho por vez \cite{IMPROVEIT-INTEGRACAO}.
+
+Como o desenvolvedor é obrigado a esperar que seu trabalho seja integrado sem apresentar falhas, isto, certamente, evita que novas tarefas sejam exercidas pelo mesmo, sem que a integração corrente termine. Isto faz com que o desenvolvedor acompanhe detalhadamente todos os testes em tempo de execução, sabendo de imediato se a performance destes está aceitável, consertando-os se necessário. Como consequência disto, nenhum \textit{commit} indevido permanecerá por muito tempo no Sistema de Controle de Versão, visto que o desenvolvedor irá desfazer as alterações que foram enviadas para o repositório caso a integração falhe.
+
+Os componentes deste modelo de integração são representados de acordo com a Figura \ref{componentes_sincrono}.
+
+\begin{figure}[ht]
+    \centering
+    \scalebox{0.7}{\includegraphics{figuras/componentes_sincrono}}
+    \caption{Componentes do modelo de Integração Contínua Síncrona. Adaptado de \cite{DUVALL}}
+    \label{componentes_sincrono}
+\end{figure}
+
+\subsection{Integração Contínua Assíncrona}
+
+Preferencialmente usada em ambientes em que a equipe está geograficamente distribuída – como em projetos \textit{open source}, por exemplo \cite{IMPROVEIT-INTEGRACAO}. A Integração Contínua Assíncrona consiste basicamente em utilizar um servidor de integração para auxiliar a tarefa de integrar o sistema, ou seja, o processo é feito automaticamente, sem a intervenção direta do desenvolvedor, cujo a única tarefa é submeter as modificações para o SCV, sendo este, monitorado pelo servidor de Integração Contínua, que inicia toda a integração.
+
+Um ponto negativo encontrado nesse modelo de integração refere-se ao fato de uma alteração submetida pelo desenvolvedor que apresentou falhas durante a integração poder criar inconsistência no repositório, uma vez que o responsável por ela pode não estar apto no momento para corrigir tais problemas de forma imediata.
+
+Outro ponto negativo neste modelo trata-se do fato de inúmeras vezes o desenvolvedor só receber a notificação de falha quando já está envolvido em outra tarefa. Isso aumenta o tempo gasto na correção das falhas pelo fato de o desenvolvedor ser compelido a recapitular o contexto mental da tarefa anterior.
+
+Os componentes deste tipo de sistema são representados de acordo com a Figura \ref{componentes}.
+
+\begin{figure}[ht]
+    \centering
+    \scalebox{0.7}{\includegraphics{figuras/componentes}}
+    \caption{Componentes de um sistema de Integração Contínua assíncrona. Adaptado de \cite{DUVALL}}
+    \label{componentes}
+\end{figure}
+
+\section{Componentes de um sistema de Integração Contínua}
+
+Para se obter um sistema de Integração Contínua são necessários vários componentes, em que cada um deles possui sua respectiva responsabilidade. Nas seções seguintes são explicados detalhadamente cada um desses componentes.
+
+\subsection{Desenvolvedor}
+
+O desenvolvedor é a peça fundamental em um sistema de Integração Contínua. Ele é o responsável por realizar as alterações no código fonte do sistema, bem como submeter tais alterações para um Sistema de Controle de Versão, com o intuito de disparar o \textit{script} responsável pela integração do sistema, caracteriznado um cenário de Integração Contínua Assíncrona. De outra forma, o desenvolvedor pode executar este \textit{script} manualmente, caracterizando um cenário de Integração Contínua Síncrona.
+
+\subsection{Sistema de Controle de Versão}
+
+Para um sistema de Integração Contínua, o uso de um Sistema de Controle de Versão é obrigatório, sendo um dos itens mais importantes para todo o processo. O Sistema de Controle de Versão assume tal importância em um sistema de Integração Contínua devido ao fato de que todo o processo é executado através da raiz do repositório. Os SCVs usualmente trabalham com uma \textit{baseline}, ou seja, uma linha principal onde se encontra o código fonte, e é justamente sobre essa linha que todo o processo de integração será executado.
+
+\subsection{Servidor de Integração Contínua}
+
+O servidor de Integração Contínua é o responsável por executar o \textit{script} de integração, também chamado de \textit{build}, quando for encontrada alguma modificação no código fonte que estiver no repositório. Na Integração Contínua Assíncrona, o servidor fica monitorando o repositório do sistema à procura de alterações, coisa que não acontece no modelo de Integração Contínua Síncrona, pelo fato da integração ser feita manualmente.
+
+Essa inspeção que o servidor de Integração Contínua faz, é realizada de tempos em tempos, ou seja, ela ocorre com certa periodicidade. Caso haja alguma modificação no Sistema de Controle de Versão, o servidor irá recuperar os arquivos do repositório e irá rodar o \textit{script} de \textit{build}.
+
+Uma vantagem bastante expressiva nos servidores de Integração Contínua é a capacidade que eles têm de prover uma interface em que os resultados dos \textit{builds} são publicados \cite{FOWLER}. A Figura \ref{buildbot} apresenta o Buildbot\footnote{http://buildbot.net}, um servidor de Integração Contínua, exibindo o resultado da integração de três \textit{builds}, os status destes, as atividades que estão sendo executadas naquele exato momento e as atividades que já foram executadas.
+
+\begin{figure}[ht]
+    \centering
+    \scalebox{0.7}{\includegraphics{figuras/buildbot}}
+    \caption{Buildbot exibindo dados da integração de um sistema}
+    \label{buildbot}
+\end{figure}
+
+É recomendável a utilização de um servidor de Integração Contínua quando se deseja automatizar o processo de integração do sistema, porém esta utilização não é obrigatória.
+
+Seguindo a mesma linha dos Sistemas de Controle de Versão, existem muitos servidores de Integração Contínua gratuitos e \textit{open source}, o que viabiliza a implantação de um sistema de integração. Outra recomendação feita é que se tenha uma máquina separada, chamada de máquina de integração, em que todo o processo irá ocorrer. Ela possuirá um servidor de Integração Contínua, que por sua vez irá fiscalizar o Sistema de Controle de Versão em busca de modificações.
+
+\subsection{\textit{Script} de \textit{build}}
+
+``Um \textit{build} é muito mais do que compilar (ou variações das linguagens dinâmicas). Um \textit{build} deve consistir de compilação, testes, inspeção, e \textit{deployment} – entre outras coisas. Um \textit{build} atua como um processo para colocar código fonte junto e verificar se o software trabalha como uma unidade coesiva.'' \cite{DUVALL}.
+
+O \textit{build} é um único \textit{script}, ou conjunto deles, que irá compilar o código fonte do sistema, executar a suíte de testes, realizar a inspeção do código e fazer o \textit{deployment} do software, ou seja, gerar software executável com a última versão do código fonte.
+
+A seção 3.3 - O \textit{script} de \textit{build} apresenta em maiores detalhes as etapas deste \textit{script}.
+
+\subsection{Mecanismo de \textit{Feedback}}
+
+Um dos princípios da Integração Contínua é o \textit{feedback} rápido.Quando uma suíte de teste é executada e caso algum teste falhe, a equipe de desenvolvimento é avisada instantaneamente através do \textit{feedback} \cite{DUVALL}. Recebendo tal informação de falha, o responsável pelo código deve solucionar o problema. O feedback \textit{também} pode ser utilizado para informar a execução do \textit{build} com sucesso, as mudanças no último \textit{build}, os arquivos criados, entre outras coisas.
+
+Em se tratando de Integração Contínua existem várias formas de mecanismo de \textit{feedback}. Pode ser utilizado e-mail, que é a forma mais comum e também o \textit{Short Message Service} (SMS), serviço de envio de mensagens para celulares. Ademais, pode-se obter \textit{feedback} com \textit{Really Simple Syndication (RSS)}, \textit{plugins} de navegadores, mensageiros instantâneos como por exemplo o Google Talk, \textit{widgets}, entre outros.
+
+Além destes mecanismos citados acima, também é comum a utilização de \textit{Ambient Orb} (Orb de Ambiente), que se trata de uma bola que pode ser configurada para ter uma determinada cor específica de acordo com o resultado do \textit{build}. Outro item que também pode ajudar no \textit{feedback} é o som, que pode ser personalizado para executar um determinado arquivo quando o \textit{build} é feito com sucesso. Caso o \textit{build} falhe, o arquivo a ser executado será outro.
+
+Outro mecanismo utilizado são as \textit{Lava Lamps} (Lâmpadas de Lava), as quais são muito conhecidas no mercado como itens decorativos. Elas podem ser configuradas para acenderem de acordo com a situação do \textit{build}. Usualmente formando um par, as lâmpadas costumam ter cada uma delas uma determinada cor. A lâmpada que irá representar o \textit{build} com sucesso terá a cor verde e a lâmpada que demonstrará falha no \textit{build} terá cor vermelha. Enquanto o \textit{build} funcionar, a lâmpada vermelha não irá acender e a verde permanecerá acesa, acontecendo o inverso se o \textit{build} falhar, o que consequentemente irá apagar a lâmpada verde e acender a vermelha. A Figura \ref{lava_lamps} apresenta um exemplo do uso das Lâmpadas de Lava.
+
+\begin{figure}[ht]
+    \centering
+    \scalebox{0.7}{\includegraphics{figuras/lava_lamps}}
+    \caption{Lâmpadas de Lava mostrando a situação do \textit{build}. Fonte: \cite{LAVA-LAMPS}}
+    \label{lava_lamps}
+\end{figure}
+
+Esses mecanismos de \textit{feedback}, como o \textit{Ambient Orb}, as Lâmpadas de Lava e os sons criam um ambiente de trabalho engraçado e personalizado, o que acaba motivando os desenvolvedores e prova que é possível desenvolver software de qualidade em um ambiente descontraído e divertido.
+
+\section{O \textit{script} de \textit{build}}
+
+Essa seção apresenta em detalhes o \textit{script} de \textit{build} bem como seus respectivos tipos e mecanismos.
+
+\subsection{Botão de Integração}
+
+Quando se trata de Integração Contínua, é comum alguns autores citarem o termo ``botão da integração''. O conceito deste, é a criação de um botão virtual, que a um toque, faça com que determinadas etapas sejam executadas e, como resultado final, produzam software funcional. A Figura \ref{botao_integracao} demostra as etapas que são realizadas ao toque do botão da integração.
+
+\begin{figure}[ht]
+    \centering
+    \scalebox{0.7}{\includegraphics{figuras/botao_integracao}}
+    \caption{Botão da integração e suas etapas. Adaptado de \cite{DUVALL}}
+    \label{botao_integracao}
+\end{figure}
+
+\subsubsection{Compilação de código fonte}
+
+A compilação é uma das etapas mais básicas do \textit{script} de \textit{build}. Compilação se trata do processo de transformação do código fonte em linguagem que a máquina irá entender e executar \cite{DUVALL}.
+
+\subsubsection{Integração de Banco de Dados}
+
+A Integração de Banco de Dados é referente a todo o processamento relacionado ao Banco de Dados do sistema, caso o sistema faça uso de um deles. A Integração do Banco de Dados consiste na execução dos \textit{scripts} de criação e remoção de bancos e tabelas, aplicação de \textit{procedures} e \textit{triggers}, inserção de dados nas tabelas, entre outras coisas.
+
+De acordo com \citeonline{DUVALL}, muitas pessoas acham que a Integração do Banco de Dados é feita como se fosse um processo independente, separado da integração do restante do sistema. Como o Banco de Dados é uma parte que compõe toda a aplicação, o correto é que a cada modificação em um desses \textit{scripts}, o \textit{build} seja executado para verificar se as modificações feitas não geram inconsistência no sistema.
+
+\subsubsection{Execução de testes}
+
+Trata-se de uma das etapas mais importantes do processo de Integração Contínua, uma vez que, ela é responsável pela verificação do correto funcionamento das partes integrantes do sistema, assim como dos relacionamentos entre elas.
+
+\citeonline{FOWLER} apresenta o conceito de \textit{build} auto-testável, onde defende que uma falha ou erro na execução de qualquer um dos testes integrantes da suíte de testes do sistema deve causar a falha de todo o processo de \textit{build}. Essa abordagem, que é permeada de grandes benefícios para o processo de desenvolvimento de software, vem confirmar a indispensabilidade dos testes para o processo de Integração Contínua.
+
+Outra importância acrescentada por \citeonline{DUVALL} à essa etapa é a de conferir confiabilidade ao que está sendo desenvolvido. Segundo ele, sem testes automatizados, é difícil para desenvolvedores ou colaboradores do projeto terem confiança nas mudanças do software.
+
+\subsubsection{Execução de inspeções}
+
+A etapa de execução de inspeções é caracterizada pelo processo de análise do código que foi escrito \cite{DUVALL}. Esta técnica, muita das vezes feita manualmente, é realizada com um  desenvolvedor da equipe criticando e fazendo sugestões ao código que outro desenvolvedor escreveu.
+
+Essa tarefa de inspeção manual de código pode acarretar em desperdício de tempo, visto que seguir padrões são cansativos, dolorosos e difíceis de serem acompanhados.
+
+Para evitar a dor de cabeça causada pela inspeção manual de código, existem ferramentas gratuitas que fazem o processo automaticamente. Elas têm as funcionalidades de verificar código duplicado, quantificar o número de linhas não comentadas e até mesmo fazer um \textit{build} falhar caso algum padrão não tenha sido obedecido.
+
+\subsubsection{\textit{Deployment}}
+
+\textit{Deployment} é o processo que torna possível a entrega do software funcional ao cliente, com as últimas modificações ocorridas, em qualquer lugar, a qualquer hora e com o mínimo de esforço, viabilizando um ambiente de teste para a avaliação do cliente \cite{DUVALL}. Esta entrega é denominada, no método ágil XP, como \textit{release}, e é normalmente feita a pedido do cliente ou negociada no início do desenvolvimento (será entregue ao cliente um software funcional toda semana, por exemplo).
+
+O \textit{deployment} pode ser uma etapa do \textit{script} de \textit{build}, mas normalmente não é, por dois principais motivos: o primeiro, por ser um processo lento que abrange outras etapas, como compilação do código fonte, integração do banco de dados, execução dos testes, execução de inspeções, entre outras coisas; o segundo é pelo fato de que cada \textit{commit} feito para o SCV, faz com que o \textit{script} de \textit{build} seja executado. Visto que, muitos destes \textit{commits} são efetuados por dia,  não entende-se aqui a nescessidade de se ter inúmeras \textit{releases} por dia, já que, elas são a pedido do cliente ou programadas, como já foi mencionado no parágrafo anterior, além de evitar, gastos desnecessários de processamento e de tempo.
+
+\subsubsection{Documentação}
+
+Um dos objetivos do \textit{build} pode ser a criação automática da documentação do software. Para \citeonline{DUVALL}, a melhor documentação acaba sendo o próprio código fonte, quando este apresenta-se de forma clara e concisa atráves de nomes de métodos, variáveis, classes, entre outros. Todavia, somente este código bem escrito, nem sempre é o suficiente. Determinados projetos necessitam de diagramas de UML, documentação de \textit{Application Programming Interface} (API), etc. Gerar esta documentação manualmente é trabalhosa, pois qualquer modificação no código costuma alterar a documentação. Porém, existem ferramentas que criam esta documentação automaticamente, e podem ser embutidas no \textit{script} de \textit{build}, obtendo sempre a documentação atualizada e, consequentemente, evitando desperdício de tempo.
+
+\subsection{Tipos de \textit{build}}
+
+O \textit{build} pode ocorrer em 3 níveis de hierarquia:
+
+\begin{itemize}
+    \item{Privado}
+    - Neste tipo de \textit{build}, a integração é feita na máquina do desenvolvedor. O desenvolvedor, ou o par (em práticas ágeis), roda um \textit{build} privado antes de enviar o novo código para o repositório, para integrar as mudanças dele com as possíveis mudanças que outros desenvolvedores da equipe tenham feito. As etapas para executar um \textit{build} privado são:
+    \begin{enumerate}
+        \item{Pegar do repositório o código a ser alterado}
+        \item{Fazer as alterações necessárias no código}
+        \item{Pegar as últimas mudanças do repositório}
+        \item{Rodar o \textit{build} privado}
+        \item{Comitar o código modificado para o repositório}
+    \end{enumerate}
+
+A Figura \ref{build_privado} apresenta o esquema das etapas para se executar um \textit{build} privado.
+
+\begin{figure}[ht]
+    \centering
+    \scalebox{0.7}{\includegraphics{figuras/build_privado}}
+    \caption{Esquema das etapas para se executar um \textit{build} privado. Adaptado de \cite{DUVALL}}
+    \label{build_privado}
+\end{figure}
+
+    \item{Integração}
+    - Este \textit{build} de Integração tem como objetivo integrar todas as mudanças ocorridas no repositório. Ele integra todas as alterações que o desenvolvedor fez, com o código que está localizado no Sistema de Controle de Versão. O ideal é que esse \textit{build} seja executado em uma máquina separada.
+
+    \item{Release}
+    - Um dos pilares da Integração Contínua é a possibilidade de se criar software funcionando a qualquer momento com apenas um comando. Este é o objetivo deste \textit{build}, entregar software funcionando para o usuário final, para que ele possa utilizar no ambiente de trabalho dele. Este \textit{build} usualmente é executado com certa periodicidade específica, por exemplo, um mês.
+\end{itemize}
+
+
+\subsection{Mecanismos de \textit{build}}
+
+Nem todos os \textit{builds} são executados da mesma forma. Eles são executados levando-se em consideração o seu propósito e frequência. Alguns \textit{builds} podem ter sua execução feita manualmente por realizar a execução de testes mais demorados, por exemplo. Outros podem ser disparados automaticamente, bastando somente acontecer alguma mudança no Sistema de Controle de Versão. Portanto, existem alguns mecanismos de \textit{build}, como descrito abaixo:
+
+\begin{itemize}
+    \item{Sob-demanda} - O processo de \textit{build} é disparado manualmente pelo desenvolvedor.
+    \item{Programado} - Neste mecanismo, o \textit{build} é disparado por algum evento pré-definido, como um intervalo de tempo. O \textit{build} será executado independentemente de ter ocorrido, ou não, alguma alteração no repositório de código.
+    \item{À procura de mudanças} - Um processo do servidor de Integração Contínua fica sendo executado durante um intervalo de tempo regular em busca de mudanças no repositório do software. Caso haja alguma alteração no código existente, o processo de \textit{build} é disparado automaticamente.
+    \item{Guiado por evento} - Mecanismo muito parecido com o de procura por mudanças, porém, o processo de verificação de mudanças no código é feito pelo próprio repositório. Se ele detecta uma mudança, o processo de \textit{build} é inicializado.
+
+A Figura \ref{mecanismos} mostra quais mecanismos cada \textit{build} pode executar.
+
+\begin{figure}[ht]
+    \centering
+    \scalebox{0.7}{\includegraphics{figuras/mecanismos}}
+    \caption{Relação entre mecanismos e tipos de \textit{build}. Fonte: \cite{DUVALL}}
+    \label{mecanismos}
+\end{figure}
+\end{itemize}
+
+\section{Práticas da Integração Contínua}
+
+Neste item é explicado algumas práticas comuns da Integração Contínua.
+
+\subsection{Manter um único repositório de código}
+
+Projetos de software, usualmente, são compostos por várias pessoas. Cada pessoa da equipe irá criar inúmeros arquivos que, em conjunto, resultarão no produto final. Ao longo do projeto, a quantidade de arquivos criados irá crescer rapidamente, o que torna penosa a tarefa de coordenar manualmente todo o trabalho de uma equipe. Para tal serviço é que são utilizados os Sistemas de Controle de Versão, os quais também são chamados de repositórios.
+
+Em um ambiente de Integração Contínua é muito importante a utilização de um Sistema de Controle de Versão, com o intuito de manter todos os arquivos necessários juntos para a construção do sistema. Um problema que acontece muitas vezes nas equipes é que elas não colocam todos os arquivos no repositório, pensando que somente devem estar lá arquivos de código fonte. Logo, vê-se a importância de um sistema para centralização dos arquivos necessários para o sistema.
+
+\subsection{\textit{Build} automatizado}
+
+Gerar software funcional com o código que está no repositório requer a realização de várias etapas como a compilação de código fonte, execução de \textit{scripts}, criação do banco de dados, entre outras. Realizar estas etapas manualmente pode se tornar uma tarefa entediante e inconveniente, visto que estas podem, e devem, ser automatizadas. O patamar ideal é que o software possa ser criado com apenas um simples comando, através de um \textit{script} de \textit{build} automatizado.
+
+Quando é dito que um comando deve criar software funcional, deve-se levar em conta, que todos os arquivos necessários para criar o sistema estejam no \textit{script} de \textit{build}. Então, qualquer pessoa deve ser capaz de pegar uma máquina virgem, obter os arquivos do repositório, executar um único comando e ter um sistema rodando na máquina \cite{FOWLER}. O que acontece muitas vezes é que as equipes esquecem de colocar tudo que é essencial no \textit{build}, fazendo com que, para criar o software final, seja preciso realizar determinadas tarefas, antes ou depois da execução do \textit{script} de \textit{build}.
+
+\citeonline{FOWLER} também diz que o build só deve compilar os arquivos que foram modificados. Com isso, o tempo de execução de um \textit{build} pode ser reduzido consideravelmente, o que é uma prática aconselhável.
+
+Quando se diz em \textit{script} de \textit{build}, imagina-se que ele é apenas um único \textit{script} que faz todo o serviço, e nem sempre é isso, ele também pode ser um conjunto de \textit{scripts}, onde cada um faz uma determinada tarefa. Alguns projetos, por exemplo, possuem testes que são mais demorados, como por exemplo, testes de carga e performance. Esperar por testes demorados em um \textit{build}, obviamente, não é uma boa prática, o que condiz com a prática do XP ``\textit{Ten minute build}'' (Build de dez minutos) \cite{BECK}. Por tal motivo, nem sempre é aconselhável que esses testes fiquem no \textit{script} de \textit{build}. Por isso, é normal que diferentes tipos de \textit{build} sejam criados e que cada um deles execute diferentes tarefas, sendo cada um executado em determinados momentos do projeto.
+
+\subsection{\textit{Build} auto-testável}
+
+Uma boa forma de capturar defeitos mais rapidamente e eficientemente é incluir testes automatizados no processo de \textit{build} \cite{FOWLER}. Levando-se em consideração que um dos princípios da Integração Contínua é o \textit{feedback} instantâneo, uma suíte de testes abrangente é a melhor forma de verificar se o sistema está integrado corretamente.
+
+Com o avanço do método ágil \textit{Extreme Programming} (XP) e a prática \textit{Test Driven Development} (TDD), o desenvolvimento de testes ficou muito mais viável e popular. Apesar destas práticas serem recomendadas, elas não são obrigatórias, pois o que realmente importa para realizar a Integração Contínua é o código coberto por testes, independente da técnica com que eles foram construídos.
+
+Segundo \citeonline{FOWLER}, para que um \textit{build} seja auto-testável, a falha de um teste deve causar a falha do \textit{build}. Daí surge a importância do \textit{build} auto-testável ter uma boa cobertura de testes.
+
+\subsection{Todos enviam alterações para o repositório todos os dias}
+
+De acordo com a definição de \citeonline{FOWLER} acerca da Integração Contínua, os desenvolvedores devem enviar código para o repositório, ao menos uma vez por dia, ou seja, quanto mais \textit{commits} forem feitos pelos desenvolvedores, melhor será o processo de integração.
+
+Enviar código frequentemente para o repositório é uma boa prática, porque reduz conflitos entre os códigos. O que costuma acontecer é a nescessidade de mais de um desenvolvedor ter que trabalhar no mesmo arquivo, o que pode gerar conflitos, pois o código pode ser alterado de tal forma que os testes falhem ao serem executados. Embora esses conflitos aconteçam, quanto mais rápido eles forem descobertos, mais rápido eles serão corrigidos. Imagine que o tempo entre o envio de arquivos para o repositório seja curto. Caso haja conflito, haverão poucos lugares para verificar aonde o problema está. Agora imagine que os arquivos sejam enviados para o repositório com pouca frequência. A quantidade de lugares em que o \textit{bug} pode estar escondido aumenta consideravelmente, dificultando sua resolução.
+
+Além disto, envios frequentes ao repositório encorajam aos desenvolvedores a quebrar seus códigos em pequenas partes de poucas horas cada \cite{FOWLER}. Isto, que combina fielmente com o princípio do método XP, \textit{Baby Steps} (Passos de bebê) \cite{IMPROVEIT-PASSOS}, faz com que o código seja feito gradativamente e com segurança, evitando conflitos e criando a sensação de progresso.
+
+\subsection{Todo \textit{commit} deve atualizar a \textit{baseline} na máquina de integração}
+
+Independente do modelo de Integração Contínua que a equipe estiver utilizando, todo \textit{commit} efetuado deve gerar o sistema com as última modificações encontradas na \textit{baseline} (local do repositório que contém as últimas alterações do sistema), em uma máquina dedicada, a qual é chamada de máquina de integração.
+
+Quando o desenvolvedor altera o código em que está trabalhando, a intenção é que as modificações, que funcionaram em uma máquina, funcionem também nas máquinas dos demais desenvolvedores do projeto \cite{SHORE}. Por este motivo, \citeonline{DUVALL} salienta que o ambiente de trabalho seja exatamente igual ao ambiente de produção. Todavia, nem sempre é isso o que acontece. Muitas vezes, o código que funciona na máquina do desenvolvedor não funciona em outros ambientes. É daí que surge a idéia da máquina de integração. Esta contém um ambiente bom e puro que serve para ratificar que as alterações feitas irão funcionar em qualquer máquina do ambiente de desenvolvimento.
+
+Uma recomendação feita acerca do uso da máquina de integração é que esta só deve ser utilizada para integrar o sistema e não ser usada para correção de problemas \cite{SHORE}. A correção deve ser feita na máquina do desenvolvedor pois, provavelmente, ele deve ter esquecido de realizar o \textit{commit} de um ou mais arquivos. Se o problema for corrigido na máquina de integração, os desenvolvedores que pegarem o código do repositório também irão encontrar os mesmos problemas.
+
+\subsection{Mantenha o {build} rápido}
+
+Segundo \citeonline{SHORE}, o problema mais comum que as equipes que praticam a Integração Contínua enfrentam, são os \textit{builds} lentos e para \citeonline{FOWLER}, o principal foco da Integração Contínua é prover \textit{feedback} rápido. Logo, é impossível obter \textit{feeedback} instantâneo com \textit{builds} demorados. Por isso, existe a recomendação de sempre se manter o \textit{build} rápido.
+
+\citeonline{SHORE} também diz que, sempre que possível, manter o tempo do \textit{build} abaixo de 10 minutos. Aconselha-se este período de tempo, pois é um intervalo em que os desenvolvedores podem conversar entre si sobre o projeto, planejar as próximas tarefas a serem feitas ou, até mesmo, aproveitar o tempo para descansar. Ademais, quanto mais rápido o \textit{build} for, maior o tempo que os desenvolvedores passarão implementando o sistema.
+
+O que faz com que muitos \textit{builds} fiquem lentos, na maioria dos casos, é a execução de testes demasiadamente demorados. As vezes, o mais aconselhável é a criação de outros \textit{scripts} que possam executar esses testes mais demorados separadamente \cite{SHORE}. Por exemplo, testes de carga, desempenho, estabilidade, são testes lentos e não precisam ser executados em cada integração. Separar os testes demorados do restante do \textit{build}, irá reduzir drasticamente o tempo gasto na integração, fazendo com que seja possível atingir o limiar de 10 minutos do \textit{build} \cite{BECK}.
+
+\subsection{Teste em uma cópia do ambiente de produção}
+
+Quando testes são criados, um dos seus propósitos, é evitar que erros apareçam durante a fase de produção do sistema. Por tal motivo, é necessário fazer os testes em uma cópia do ambiente de produção.
+
+Com ambientes de testes e produção diferentes, erros que podem acontecer em um ambiente, podem não acontecer no outro e vice-versa. Esse é o objetivo de testar em abientes parecidos. A chance de um erro imprevisto acontecer em produção é reduzido consideravelmente \cite{FOWLER}.
+
+Idealmente, o ambiente de teste deve ser idêntico ao ambiente de produção, porém, isso nem sempre é possível. Então, o objetivo é chegar o mais próximo possível do clone do ambiente de produção. Para isso, deve-se usar a mesma versão do sistema de banco de dados, sistema operacional, bibliotecas e até mesmo o mesmo IP, \textit{hardware}, etc.
+
+\subsection{Torne fácil para qualquer pessoa o acesso ao último executável}
+
+Segundo \citeonline{FOWLER} uma das partes mais difíceis na construção de um software, é saber se o que está sendo desenvolvido é realmente o que o cliente espera. Conclui-se que para ajudar neste trabalho, o desenvolvedor deve manter um lugar com o executável da última versão do sistema funcionando, para que possa ser demonstradas, testadas ou simplismente vistas pelo cliente as últimas modificações daquela semana \cite{FOWLER}. Vale ressaltar também, que qualquer um pode acessar o referido executável, sem ter a necessidade, de ter acesso ao \textit{build} ou até mesmo possuir algum conhecimento de informática.
+
+\subsection{Todos podem ver o que está acontecendo}
+
+Para \citeonline{FOWLER}, o estado do \textit{build} é uma das coisas mais importantes para comunicação do processo de integração. Dependendo da situação do \textit{build}, a equipe de desenvolvedores sabe quais atitudes deve tomar.
+
+Baseado na informação do \textit{build}, muitos servidores de Integração Contínua possuem uma interface na qual qualquer pessoa pode acessar e ver o andamento do \textit{build}, se ele está em execução, se falhou ou se foi executado sem erros. Já que a situação do \textit{build} está disponível através do servidor, não há necessidade de estar no mesmo local da equipe para ver seu status, ou seja, pessoas dispersas geograficamente do local da equipe poderão acompanhar o \textit{build}. A Figura \ref{hudson} mostra o Hudson\footnote{http://hudson-ci.org}, um servidor de Integração Contínua, mostrando o status dos \textit{builds} de um determinado projeto.
+
+\begin{figure}[ht]
+    \centering
+    \scalebox{0.7}{\includegraphics{figuras/hudson}}
+    \caption{Status dos \textit{builds} no Hudson.}
+    \label{hudson}
+\end{figure}
+
+\subsection{\textit{Deploy} automático}
+
+Segundo \citeonline{FOWLER}, é importante ter \textit{scripts} que permitam a implantação da aplicação dentro de qualquer ambiente facilmente. Utilizando \textit{deploy} manual, a implantação do sistema pode não ser aplicada tão facilmente, como disse Fowler. Fazendo uso deste tipo de \textit{deploy}, o responsável deve seguir uma série de etapas para disponibilizar a nova aplicação no ambiente de produção. Exemplificando, o responsável terá que acessar o servidor de produção, parar o servidor \textit{Web}, fazer \textit{backup} da aplicação que está em uso, colocar a nova aplicação e inciar o servidor \textit{Web}. Agora imagine que haja mais etapas a serem realizadas do que as que foram citadas anteriormente. A probabilidade do responsável esquecer alguma etapa aumenta consideravelmente.
+
+Já com o \textit{deploy} automático, a chance de alguém esquecer alguma configuração é extinta, ao passo que no \textit{deploy} manual é necessário realizar várias etapas manualmente. Com a execução de um \textit{script}, as tarefas que eram executadas manualmente, passam a ser automatizadas, reduzindo a chance de erros na hora do \textit{deploy}. Além disso, o processo de \textit{deploy} se torna menos trabalhoso, encorajando os desenvolvedores a fazerem mais \textit{deploys} , mantendo a versão em produção sempre atualizada.
+
+\section{Vantagens da Integração Contínua}
+
+Neste item serão apresentado os principais benefícios que a prática da Integração Contínua pode proporcionar.
+
+\subsection{Defeitos são encontrados e corrigidos o quanto antes}
+
+``Visto que a Integração Contínua integra e roda testes e inspeções diversas vezes ao dia, existe uma grande chance de os defeitos serem descobertos quando eles forem introduzidos'' \cite{DUVALL}.
+
+Exemplificando o que foi dito acima, imagine que um sistema funcione corretamente. Após um determinado \textit{commit}, o sistema não é mais integrado corretamente e o \textit{build}, consequentemente, falha. A partir disso, existe uma grande possibilidade de o código que está quebrando o \textit{build} estar neste último \textit{commit}, visto que, foi a partir dele que o sistema passou a não ser integrado corretamente.
+
+Logo, a quantidade de possíveis lugares onde o defeito pode estar contido é baixa, facilitando a detecção e a resolução do mesmo, contribuindo para a integridade do software criado.
+
+\subsection{Feedback instantâneo}
+
+Segundo \citeonline{FOWLER}, o principal foco da integração contínua é o \textit{feedback} instantâneo. O \textit{script} de \textit{build} será responsável por ativar o único, ou vários, mecanismos de \textit{feedback} para alertar a equipe de desenvolvedores que a última integração que ocorreu apresenta falhas e deve ser corrigida o quanto antes, visando sempre manter a base de código consistente.
+
+O propósito do \textit{feedback} é criar uma notificação que irá estimular uma ação rápida e precisa. Para isso, é necessário enviar a informação correta, para as pessoas corretas, no tempo correto e da forma correta \cite{DUVALL}. A informação correta ideal é a notificação do status do \textit{build}, junto do resultado dos testes, das inspeções e do \textit{deployment}. As pessoas corretas dependerão do tipo de informação enviada, ou seja, o ideal é que cada pessoa da equipe receba somente a informação que lhe seja pertinente, visto que enviar \textit{feedback} para todos no projeto, usualmente, faz com que a equipe passe a ignorar as informações recebidas \cite{DUVALL}. O tempo certo é o menor intervalo possível entre o aparecimento do erro e o \textit{feedback} à equipe. Receber o \textit{feedback} de um \textit{build} quebrado dias atrás não acrescenta em nada à equipe e ainda pode ocasionar perda de tempo e frustração ao alocar desenvolvedores para corrigir um erro que já havia sido corrigido. A forma correta se resume na escolha de um ou mais tipos de mecanismos de \textit{feedback}. O critério de escolha será da própria equipe, levando-se em consideração as vantagens e desvantagens de cada mecanismo.
+
+Com o \textit{feedback} instantâneo, uma modificação que não foi integrada corretamente com o restante do código é rapidamente descoberta, pois o desenvolvedor irá obter uma mensagem caso o \textit{build} tenha quebrado. Corrigir esse erro torna-se muito mais fácil devido à pequena gama de lugares onde o erro pode estar. Agora, imagine que em um sistema a integração seja feita somente após o término do desenvolvimento. Provavelmente, irão surgir erros e mais erros de todos os possíveis lugares, o que torna a correção deles uma tarefa trabalhosa e cansativa.
+
+Além do que já foi dito, o \textit{feedback} irá mostrar o status do sistema. Este mostra para a equipe como está a saúde do software. Verificando a integridade dele é exequível analisar possíveis problemas no processo de integração. Uma base de dados que se mantém por muito tempo corrompida, indica que a equipe não está levando o processo tão sério quanto deveria.
+
+\subsection{Redução de problemas futuros na instalação do software}
+
+Segundo \citeonline{DUVALL}, através da reconstrução e teste de software em um ambiente limpo, ou seja, em um sistema recém-instalado, usando o mesmo processo e \textit{scripts} que foram utilizados no ambiente de desenvolvimento, é possível reduzir problemas futuros na instalação do software. Para exemplificar, supõe-se que uma determinada funcionalidade do sistema tenha como dependência uma pacote chamado ``python-dev'', e que por coincidência, esse pacote já se encontra instalado no ambiente do desenvolvedor. Logo, como o desenvolvedor desconhece desta dependência, ele não o adiciona na lista de dependências do sistema, e sua nova funcionalidade é eviada para o SCV.
+
+Obviamente, quando esta funcionalidade for instalada no servidor de produção, a nova funcionalidade não funcionará. Por este motivo, que deve-se executar os testes, bem como instalar os módulos do sistema em um ambiente recém-instalado, facilitando a detecção deste problema.
+
+\subsection{Redução de processos manuais repetitivos}
+
+É da tendência do ser humano automatizar processos manuais que são feitos com grande frequência. A escassez de tempo e o retrabalho são as principais causas do processo de automatização. Por isso, a existência de máquinas e processos automatizados, já que estes diminuem os custos e aumentam a velocidade da produção \cite{LACOMBE}.
+
+Neste âmbito, a Integração Contínua visa reduzir processos repetitivos economizando tempo, custos e esforço, através da automatização da integração. Estes processos repetitivos podem ocorrer em todas as atividades do projeto, incluindo a compilação do código, integração do banco de dados, testes, inspeções, implantação e \textit{feedback} \cite{DUVALL}.
+
+Para \citeonline{DUVALL}, ao automatizar a Integração Contínua, tem-se uma maior capacidade para assegurar o seguinte:
+
+\begin{itemize}
+    \item{O processo funciona da mesma maneira toda vez;}
+    \item{Um processo ordenado é seguido. Por exemplo, pode-se executar inspeções (Análise estática) antes de executar os testes - em seu \textit{scripts} de build;}
+    \item{A redução do trabalho em processos repetitivos, liberando as pessoas para realizarem trabalhos mais instigantes, de maior valor.}
+\end{itemize}
+
+\subsection{Geração de software executável ao clique de um botão}
+
+Quando se fala em geração de software com o clique de um botão, faz-se referência ao botão da integração (Figura \ref{botao_integracao}). A partir deste botão virtual, uma série de etapas é executada, sendo que uma delas é responsável pelo \textit{deployment} do sistema, ou seja, a criação do software executável.
+
+Para \citeonline{DUVALL}, o maior benefício da Integração Contínua é conseguir gerar software executável a qualquer momento, visto que é o item mais ``tangível''  para pessoas que não estão envolvidas diretamente com o desenvolvimento do software, como clientes e usuários.
+
+O fato de o software poder ser gerado a qualquer momento, evita que haja atrasos na entrega do mesmo, para que o cliente possa, por exemplo, testá-lo. Projetos que não usam a Integração Contínua, terão que integrar, rodar inspeções e testes, antes da entrega do sistema. Como a integração manual não é um ``mar de rosas'' e a equipe não integra frequentemente, a quantidade de testes e inspeções que irão falhar será enorme e a integração do sistema não acontecerá corretamente, obrigando a equipe de desenvolvimento a consertar estes defeitos. Em consequência disto, a entrega do software pode atrasar em alguns dias, ou até mesmo meses, devido ao tempo gasto para a correção dos defeitos.
+
+Vale lembrar que ``o objetivo é estar tecnologicamente pronto para o lançamento, mesmo que não esteja funcionalmente pronto para o lançamento'' \cite{SHORE}. Isso mostra que a Integração Contínua pode prover a criação do software a qualquer momento, mesmo que alguma funcionalidade não tenha sido implementada por completo. Suponha que em um sistema, esteja sendo implementado uma nova funcionalidade de cadastro de pessoas. Se em algum momento for necessário a criação do software, ele estará apto para tal, mesmo que não esteja com a funcionalidade totalmente pronta.
+

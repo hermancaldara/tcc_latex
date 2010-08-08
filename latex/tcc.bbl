@@ -1,0 +1,105 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{1.53 }
+
+\bibitem[Astels 2003]{ASTELS}
+\abntrefinfo{Astels}{ASTELS}{2003}
+{ASTELS, D. \emph{Test-Driven Development: A Practical Guide}. New Jersey:
+  Prentice Hall, 2003.}
+
+\bibitem[Beck 2004]{BECK}
+\abntrefinfo{Beck}{BECK}{2004}
+{BECK, K. \emph{Programação extrema explicada: acolha as mudanças}. Porto
+  Alegre: Bookman, 2004.}
+
+\bibitem[Duvall 2007]{DUVALL-ENTREVISTA}
+\abntrefinfo{Duvall}{DUVALL}{2007}
+{DUVALL, P.~M. \emph{How continuous integration improves software quality}.
+  2007.
+Disponível em
+  http://searchsoftwarequality.techtarget.com/news/interview/0,289202,sid92\_g%
+ci1261901,00.html, acesso em 03/03/2010.}
+
+\bibitem[Duvall, Matyas e Glover 2007]{DUVALL}
+\abntrefinfo{Duvall, Matyas e Glover}{DUVALL; MATYAS; GLOVER}{2007}
+{DUVALL, P.~M.; MATYAS, S.; GLOVER, A. \emph{Continuous Integration: Improving
+  Software Quality and Reducing Risk}. Boston: Addison-Wesley, 2007.}
+
+\bibitem[Fowler 2006]{FOWLER}
+\abntrefinfo{Fowler}{FOWLER}{2006}
+{FOWLER, M. \emph{Continuous Integration}. 2006.
+Disponível em http://martinfowler.com/articles/continuousIntegration.html,
+  acesso em 03/03/2010.}
+
+\bibitem[Improve It 2006a]{IMPROVEIT-INTEGRACAO}
+\abntrefinfo{Improve It}{IMPROVE IT}{2006a}
+{IMPROVE IT. \emph{Integração Contínua}. 2006a.
+Disponível em http://improveit.com.br/xp/praticas/integracao, acesso em 25 de
+  fevereiro de 2010.}
+
+\bibitem[Improve It 2006b]{IMPROVEIT-MANIFESTO}
+\abntrefinfo{Improve It}{IMPROVE IT}{2006b}
+{IMPROVE IT. \emph{Manifesto Ágil}. 2006b.
+Disponível em http://improveit.com.br/xp/manifesto\_agil, acesso em
+  03/03/2010.}
+
+\bibitem[Improve It 2006c]{IMPROVEIT-PASSOS}
+\abntrefinfo{Improve It}{IMPROVE IT}{2006c}
+{IMPROVE IT. \emph{Passos de bebê}. 2006c.
+Disponível em http://improveit.com.br/xp/principios/passos\_bebe, acesso em
+  03/03/2010.}
+
+\bibitem[Koskela 2007]{KOSKELA}
+\abntrefinfo{Koskela}{KOSKELA}{2007}
+{KOSKELA, L. \emph{Test Driven: TDD and Acceptance TDD for Java Developers}.
+  New Jesey: Manning Publications, 2007.}
+
+\bibitem[Lacombe 2004]{LACOMBE}
+\abntrefinfo{Lacombe}{LACOMBE}{2004}
+{LACOMBE, C. \emph{Anteprojeto de Carta de Preservação do Patrimônio
+  Arquivístico Digital}. 2004.
+Disponível em http://libdigi.unicamp.br/document/?code=8385, acesso em
+  03/03/2010.}
+
+\bibitem[Maldonado, Delamaro e Jino 2007]{DELAMARO}
+\abntrefinfo{Maldonado, Delamaro e Jino}{MALDONADO; DELAMARO; JINO}{2007}
+{MALDONADO, J.~C.; DELAMARO, M.~E.; JINO, M. \emph{Introdução ao Teste de
+  Software}. São Paulo: Campus, 2007.}
+
+\bibitem[Myers 2004]{MYERS}
+\abntrefinfo{Myers}{MYERS}{2004}
+{MYERS, J.~G. \emph{The Art of Software Testing}. New Jersey: John Wiley \&
+  Sons, Inc, 2004.}
+
+\bibitem[Oliveira 2004]{OLIVEIRA}
+\abntrefinfo{Oliveira}{OLIVEIRA}{2004}
+{OLIVEIRA, G. H.~R. \emph{Análise de ferramentas de cobertura de testes
+  baseadas em código}. Recife, 2004.}
+
+\bibitem[PRAGMATIC AUTOMATION 2007]{LAVA-LAMPS}
+\abntrefinfo{PRAGMATIC AUTOMATION}{PRAGMATIC AUTOMATION}{2007}
+{PRAGMATIC AUTOMATION. \emph{Bubble, Bubble, Build's In Trouble}. 2007.
+Disponível em
+  http://www.pragmaticautomation.com/cgi-bin/pragauto.cgi/Monitor/Devices/Bubb%
+leBubbleBuildsInTrouble.rdoc, acesso em 03/03/2010.}
+
+\bibitem[Pressman 1995]{PRESSMAN}
+\abntrefinfo{Pressman}{PRESSMAN}{1995}
+{PRESSMAN, R.~S. \emph{Engenharia de Software}. São Paulo: MAKRON Books,
+  1995.}
+
+\bibitem[Ribeiro 2010]{RIBEIRO}
+\abntrefinfo{Ribeiro}{RIBEIRO}{2010}
+{RIBEIRO, C.~L. \emph{A Relação Entre TDD e Qualidade de Software}. 2010.
+Disponível em http://www.infoq.com/br/articles/relacao-tdd-qualidade, acesso
+  em 25 de fevereiro de 2010.}
+
+\bibitem[Shore e Warden 2008]{SHORE}
+\abntrefinfo{Shore e Warden}{SHORE; WARDEN}{2008}
+{SHORE, J.; WARDEN, S. \emph{A Arte do Desenvolvimento Ágil}. Rio de Janeiro:
+  Alta Books, 2008.}
+
+\end{thebibliography}
